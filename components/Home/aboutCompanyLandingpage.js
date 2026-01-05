@@ -70,7 +70,7 @@ export default function AboutGlaciers({ id }) {
             variants={fadeUp}
             className="mt-6 text-[#E3E3E3] leading-relaxed"
           >
-            The Hindu Kush–Himalayan region functions as Asia’s water reserve,
+            The Hindu Kush-Himalayan region functions as Asia&#39;s water reserve,
             supporting over a billion people downstream. Rapid warming,
             shrinking snow cover, and unpredictable snowfall are disrupting
             natural meltwater cycles — particularly in high-altitude regions

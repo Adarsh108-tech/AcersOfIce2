@@ -129,7 +129,7 @@ export default function ProductDeepDive() {
             <h3 className="section-subtitle">Outcomes & Evidence</h3>
             <div className="grid md:grid-cols-4 gap-6">
               {[
-                ["18.4M L", "Water stored (2024–25)"],
+                ["18.4M L", "Water stored (2024-25)"],
                 ["₹0.28/L", "Cost per litre"],
                 ["↓ Labour", "Reduced maintenance visits"],
                 ["↑ Ice Volume", "Year-on-year improvement"],
@@ -224,8 +224,8 @@ export default function ProductDeepDive() {
             </p>
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                ["60–70%", "Water savings"],
-                ["70–80%", "Labour reduction"],
+                ["60-70%", "Water savings"],
+                ["70-80%", "Labour reduction"],
                 ["↑ Yield", "Improved crop outcomes"],
               ].map(([value, label], i) => (
                 <div

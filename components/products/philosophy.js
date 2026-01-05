@@ -262,8 +262,8 @@ export default function ProductPhilosophy() {
           >
             <h4 className="text-xl font-semibold text-[#0B3D91] mb-3">Automated Micro-Irrigation System (AMIS)</h4>
             <ul className="space-y-1 text-[#222222]">
-              <li><strong className="text-[#27AE60]">60–70%</strong> water savings</li>
-              <li><strong className="text-[#27AE60]">70–80%</strong> labour reduction</li>
+              <li><strong className="text-[#27AE60]">60-70%</strong> water savings</li>
+              <li><strong className="text-[#27AE60]">70-80%</strong> labour reduction</li>
             </ul>
           </motion.div>
         </div>
