@@ -2,20 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===========================
+   Custom Scrollbars (Blue)
+   =========================== */
+@layer base {
+  /* Width & height */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Track (transparent – no white bg) */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Thumb */
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      #2c3d4f, /* mid dark blue */
+      #1e293b  /* deeper blue */
+    );
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  /* Thumb hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      #334155,
+      #0f172a
+    );
+  }
+}
+
+/* ===========================
+   Firefox support
+   =========================== */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2c3d4f transparent;
+}
+
+/* ===========================
+   Theme Variables
+   =========================== */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
 
+/* ===========================
+   Dark mode
+   =========================== */
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
+
+  /* Dark scrollbar */
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      #3b82f6, /* soft blue */
+      #1e40af  /* deep blue */
+    );
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      #60a5fa,
+      #1d4ed8
+    );
+  }
 }
 
+/* ===========================
+   Body styles
+   =========================== */
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -26,6 +97,9 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* ===========================
+   Utilities
+   =========================== */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
