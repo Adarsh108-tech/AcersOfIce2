@@ -15,11 +15,7 @@ const fadeUp = {
 
 const staggerContainer = {
   hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
+  visible: { transition: { staggerChildren: 0.12 } },
 };
 
 const scaleFade = {
@@ -59,20 +55,6 @@ const newsData = [
     image: "/mountain&river2.jpg",
     href: "/mountain&river2.jpg",
   },
-  {
-    title: "Next-Gen Irrigation Systems Reduce Water Stress",
-    description:
-      "Micro-irrigation improves efficiency during critical growing periods.",
-    image: "/mountain&river2.jpg",
-    href: "/news/micro-irrigation",
-  },
-  {
-    title: "Policy Collaboration Accelerates Water Innovation",
-    description:
-      "Public-sector engagement enables faster deployment of water technologies.",
-    image: "/mountain&river2.jpg",
-    href: "/mountain&river2.jpg",
-  },
 ];
 
 const videoLinks = [
@@ -86,13 +68,18 @@ const truncateWords = (text, limit = 10) =>
   text.split(" ").slice(0, limit).join(" ") + "...";
 
 /* ======================
-   Carousel Row Component
+   Carousel Row
    ====================== */
 const CarouselRow = ({ title, children, carouselRef }) => {
-  const scroll = (direction) => {
+  const scroll = (dir) => {
     if (!carouselRef.current) return;
+
+    const width = window.innerWidth;
+    const amount =
+      width < 640 ? 240 : width < 1024 ? 300 : 360;
+
     carouselRef.current.scrollBy({
-      left: direction === "left" ? -340 : 340,
+      left: dir === "left" ? -amount : amount,
       behavior: "smooth",
     });
   };
@@ -105,18 +92,28 @@ const CarouselRow = ({ title, children, carouselRef }) => {
       whileInView="visible"
       viewport={{ once: true }}
     >
-      <div className="flex justify-between items-end mb-8">
-        <h3 className="text-2xl font-bold text-white">{title}</h3>
-        <div className="flex gap-2">
+      <div className="flex justify-between items-end mb-6">
+        <h3 className="text-xl sm:text-2xl font-bold text-white">
+          {title}
+        </h3>
+
+        {/* Buttons hidden on very small screens */}
+        <div className="hidden sm:flex gap-2">
           <button
             onClick={() => scroll("left")}
-            className="w-10 h-10 rounded-full text-white hover:text-black font-bold  shadow-md flex items-center justify-center hover:bg-gray-50 border transition-all"
+            className="w-9 h-9 md:w-10 md:h-10 rounded-full
+              text-white hover:text-black border
+              flex items-center justify-center
+              hover:bg-white transition"
           >
             ←
           </button>
           <button
             onClick={() => scroll("right")}
-            className="w-10 h-10 rounded-full text-white hover:text-black font-bold shadow-md flex items-center justify-center hover:bg-gray-50 border transition-all"
+            className="w-9 h-9 md:w-10 md:h-10 rounded-full
+              text-white hover:text-black border
+              flex items-center justify-center
+              hover:bg-white transition"
           >
             →
           </button>
@@ -125,7 +122,7 @@ const CarouselRow = ({ title, children, carouselRef }) => {
 
       <div
         ref={carouselRef}
-        className="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-2"
+        className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide scroll-smooth px-1 pb-4"
       >
         {children}
       </div>
@@ -144,20 +141,22 @@ export default function LatestInsights({ id }) {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft")
-        newsRef.current?.scrollBy({ left: -320, behavior: "smooth" });
+        newsRef.current?.scrollBy({ left: -300, behavior: "smooth" });
       if (e.key === "ArrowRight")
-        newsRef.current?.scrollBy({ left: 320, behavior: "smooth" });
+        newsRef.current?.scrollBy({ left: 300, behavior: "smooth" });
     };
 
     const setupWheel = (ref) => {
       const el = ref.current;
       if (!el) return;
+
       const handleWheel = (e) => {
         if (Math.abs(e.deltaX) < Math.abs(e.deltaY)) {
           e.preventDefault();
           el.scrollBy({ left: e.deltaY, behavior: "smooth" });
         }
       };
+
       el.addEventListener("wheel", handleWheel, { passive: false });
       return () => el.removeEventListener("wheel", handleWheel);
     };
@@ -176,20 +175,16 @@ export default function LatestInsights({ id }) {
   return (
     <motion.section
       id={id}
-      className="w-full py-24 px-6 md:px-16 overflow-hidden bg-center bg-no-repeat"
+      className="w-full py-20 sm:py-24 px-4 sm:px-6 md:px-16 overflow-hidden"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/background/mountain_back.png')",
+          "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/background/mountain_back.png')",
         backgroundSize: "cover",
       }}
-      variants={fadeUp}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
     >
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto">
         <motion.h2
-          className="text-4xl font-bold text-white mb-16 text-center md:text-left"
+          className="text-3xl sm:text-4xl font-bold text-white mb-14"
           variants={fadeUp}
         >
           Latest News & Insights
@@ -198,7 +193,7 @@ export default function LatestInsights({ id }) {
         {/* News Row */}
         <CarouselRow title="In the Headlines" carouselRef={newsRef}>
           <motion.div
-            className="flex gap-6"
+            className="flex gap-4 sm:gap-6"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -208,12 +203,16 @@ export default function LatestInsights({ id }) {
               <motion.div
                 key={index}
                 variants={fadeUp}
-                whileHover={{ y: -8 }}
-                className="min-w-[280px] max-w-[280px] flex-shrink-0"
+                whileHover={{ y: -6 }}
+                className="
+                  min-w-[240px] sm:min-w-[260px]
+                  md:min-w-[280px] lg:min-w-[300px]
+                  flex-shrink-0
+                "
               >
                 <Link href={news.href}>
-                  <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-shadow overflow-hidden h-full border border-blue-50">
-                    <div className="relative h-[160px] w-full">
+                  <div className="bg-white rounded-2xl overflow-hidden border shadow-sm hover:shadow-xl transition">
+                    <div className="relative h-[140px] sm:h-[150px] md:h-[160px]">
                       <Image
                         src={news.image}
                         alt={news.title}
@@ -221,12 +220,13 @@ export default function LatestInsights({ id }) {
                         className="object-cover"
                       />
                     </div>
-                    <div className="p-5 flex flex-col justify-between h-[180px]">
+
+                    <div className="p-4 sm:p-5 h-[170px] flex flex-col justify-between">
                       <div>
-                        <h4 className="text-md font-bold text-gray-900 mb-2">
+                        <h4 className="text-sm sm:text-base font-bold text-gray-900 mb-2">
                           {news.title}
                         </h4>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-xs sm:text-sm text-gray-600">
                           {truncateWords(news.description, 12)}
                         </p>
                       </div>
@@ -241,12 +241,12 @@ export default function LatestInsights({ id }) {
           </motion.div>
         </CarouselRow>
 
-        <hr className="my-16 border-gray-100" />
+        <hr className="my-16 border-white/20" />
 
         {/* Video Row */}
         <CarouselRow title="Field Documentation" carouselRef={videoRef}>
           <motion.div
-            className="flex gap-6"
+            className="flex gap-4 sm:gap-6"
             variants={staggerContainer}
             initial="hidden"
             whileInView="visible"
@@ -257,13 +257,16 @@ export default function LatestInsights({ id }) {
                 key={index}
                 variants={scaleFade}
                 whileHover={{ scale: 1.03 }}
-                className="min-w-[340px] max-w-[340px] flex-shrink-0"
+                className="
+                  min-w-[260px] sm:min-w-[300px]
+                  md:min-w-[340px] lg:min-w-[380px]
+                  flex-shrink-0
+                "
               >
-                <div className="aspect-video bg-black rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+                <div className="aspect-video rounded-2xl overflow-hidden border shadow-lg bg-black">
                   <iframe
                     src={link}
-                    title={`YouTube video ${index + 1}`}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    title={`video-${index}`}
                     allowFullScreen
                     className="w-full h-full"
                   />
